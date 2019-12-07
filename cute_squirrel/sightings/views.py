@@ -4,6 +4,14 @@ from django.shortcuts import redirect
 from .models import squirrel
 from .forms import SqForm
 
+# the package used for visualization
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+import pandas as pd
+from matplotlib import pyplot as plt
+import io
+import matplotlib.pyplot as plt; plt.rcdefaults()
+
 def stats(request):
     AM=squirrel.objects.filter(Shift='AM').count()
     PM=squirrel.objects.filter(Shift='PM').count()
@@ -28,28 +36,20 @@ def stats(request):
             }
     return render(request, 'sightings/stats.html',context)
 
-
-# the package used for stat
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
-import pandas as pd
-from matplotlib import pyplot as plt
-import io
-import matplotlib.pyplot as plt; plt.rcdefaults()
-
 def pie_graph(request):
+    # A view to show four pie graoh in one page
     fig = Figure()
     canvas = FigureCanvas(fig)
     squirrels = squirrel.objects.all()
     columns = [field.name for field in squirrel._meta.fields]
     df = pd.DataFrame(list(squirrels.values()),columns=columns)
     colors = ['Pink','Salmon', 'Tomato']
-
+    # obtain data used for pie graph
     plt_data_1 = df.groupby('Shift').count()['Unique_Squirrel_ID']
     plt_data_2 = df.groupby('Age').count()['Unique_Squirrel_ID'][1:]
     plt_data_3 = df.groupby('Primary_Fur_Color').count()['Unique_Squirrel_ID']
     plt_data_4 = df.groupby('Location').count()['Unique_Squirrel_ID']
-
+    # draw pie graoh
     plt.figure(figsize=(12,12))
     plt.subplot(2,2,1)
     plt.pie(plt_data_1, labels=plt_data_1.index, labeldistance=1.1, shadow=False, startangle=None, pctdistance=0.6, autopct='%0.01f%%', colors=colors)
@@ -72,12 +72,13 @@ def pie_graph(request):
 
 
 def bar_graph(request):
+    # A view to show stack bar graph about all boolean fields
     fig = Figure()
     canvas = FigureCanvas(fig)
     squirrels = squirrel.objects.all()
     columns = [field.name for field in squirrel._meta.fields]
     df = pd.DataFrame(list(squirrels.values()),columns=columns)
-    
+    # obtain data used for bar graph
     plt_data_running = df.groupby('Running').count()['Unique_Squirrel_ID']
     plt_data_chasing = df.groupby('Chasing').count()['Unique_Squirrel_ID']
     plt_data_eating = df.groupby('Eating').count()['Unique_Squirrel_ID']
@@ -90,23 +91,28 @@ def bar_graph(request):
     plt_data_approaches = df.groupby('Approaches').count()['Unique_Squirrel_ID']
     plt_data_indifferent = df.groupby('Indifferent').count()['Unique_Squirrel_ID']
     plt_data_runs_from = df.groupby('Runs_from').count()['Unique_Squirrel_ID']
+    # concat all series into a dataframe
     plt_data_5 = pd.concat([plt_data_running,plt_data_chasing,plt_data_eating,plt_data_foraging,
                             plt_data_kuks,plt_data_quaas,plt_data_moans,plt_data_tail_flags,
                             plt_data_tail_twitches,plt_data_approaches,plt_data_indifferent,plt_data_runs_from],
                             axis=1)
     fig,ax=plt.subplots(figsize=(12,8))
+    # x-label for stacj bar graph
     x=['Running','Chasing','Eating','Foraging','Kuks','Quaas','Moans','Tail flags','Tail twitches','Approaches','Indifferent','Runs from']
+    # value used to draw stack bar graph
     value = plt_data_5.values.T
-    v1 = [i[0]+i[1] for i in value]
-    v2 = [i[1] for i in value]
+    v1 = [i[0]+i[1] for i in value] # the top part of the stack bar graph
+    v2 = [i[1] for i in value] # the bottom part of the stack bar graph
     ax.bar(x,v1,color='Pink')
     ax.bar(x,v2,color='Salmon')
     ax.set(xlabel='Activities',title='Squirrels Activities')
     plt.xticks(rotation=30)
+    # add tags at the top of every bar
     for a,b in zip(x,v1):
         plt.text(a, b+0.05, '%.0f' % b, ha='center', va= 'bottom',fontsize=10)
     for a,b in zip(x,v2):
         plt.text(a, b+0.05, '%.0f' % b, ha='center', va= 'bottom',fontsize=10)
+    # set legend
     ax.legend(['False','True'],loc='lower right',fontsize=15)
 
     buf = io.BytesIO()
