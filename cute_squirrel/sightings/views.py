@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 import io
 import matplotlib.pyplot as plt; plt.rcdefaults()
 
-def graphs(request):
+def pie_graph(request):
     fig = Figure()
     canvas = FigureCanvas(fig)
     squirrels = squirrel.objects.all()
@@ -24,6 +24,7 @@ def graphs(request):
     plt_data_2 = df.groupby('Age').count()['Unique_Squirrel_ID'][1:]
     plt_data_3 = df.groupby('Primary_Fur_Color').count()['Unique_Squirrel_ID']
     plt_data_4 = df.groupby('Location').count()['Unique_Squirrel_ID']
+
     plt.figure(figsize=(12,12))
     plt.subplot(2,2,1)
     plt.pie(plt_data_1, labels=plt_data_1.index, labeldistance=1.1, shadow=False, startangle=None, pctdistance=0.6, autopct='%0.01f%%', colors=colors)
@@ -38,6 +39,51 @@ def graphs(request):
     plt.pie(plt_data_4, labels=plt_data_4.index, labeldistance=1.1, shadow=False, startangle=None, pctdistance=0.6, autopct='%0.01f%%',colors=colors)
     plt.title('The location of squirrels')
     
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    plt.close(fig)
+    response = HttpResponse(buf.getvalue(),content_type='image/png')
+    return response
+
+
+def bar_graph(request):
+    fig = Figure()
+    canvas = FigureCanvas(fig)
+    squirrels = squirrel.objects.all()
+    columns = [field.name for field in squirrel._meta.fields]
+    df = pd.DataFrame(list(squirrels.values()),columns=columns)
+    
+    plt_data_running = df.groupby('Running').count()['Unique_Squirrel_ID']
+    plt_data_chasing = df.groupby('Chasing').count()['Unique_Squirrel_ID']
+    plt_data_eating = df.groupby('Eating').count()['Unique_Squirrel_ID']
+    plt_data_foraging = df.groupby('Foraging').count()['Unique_Squirrel_ID']
+    plt_data_kuks = df.groupby('Kuks').count()['Unique_Squirrel_ID']
+    plt_data_quaas = df.groupby('Quaas').count()['Unique_Squirrel_ID']
+    plt_data_moans = df.groupby('Moans').count()['Unique_Squirrel_ID']
+    plt_data_tail_flags = df.groupby('Tail_flags').count()['Unique_Squirrel_ID']
+    plt_data_tail_twitches = df.groupby('Tail_twitches').count()['Unique_Squirrel_ID']
+    plt_data_approaches = df.groupby('Approaches').count()['Unique_Squirrel_ID']
+    plt_data_indifferent = df.groupby('Indifferent').count()['Unique_Squirrel_ID']
+    plt_data_runs_from = df.groupby('Runs_from').count()['Unique_Squirrel_ID']
+    plt_data_5 = pd.concat([plt_data_running,plt_data_chasing,plt_data_eating,plt_data_foraging,
+                            plt_data_kuks,plt_data_quaas,plt_data_moans,plt_data_tail_flags,
+                            plt_data_tail_twitches,plt_data_approaches,plt_data_indifferent,plt_data_runs_from],
+                            axis=1)
+    fig,ax=plt.subplots(figsize=(12,8))
+    x=['Running','Chasing','Eating','Foraging','Kuks','Quaas','Moans','Tail flags','Tail twitches','Approaches','Indifferent','Runs from']
+    value = plt_data_5.values.T
+    v1 = [i[0]+i[1] for i in value]
+    v2 = [i[1] for i in value]
+    ax.bar(x,v1,color='Pink')
+    ax.bar(x,v2,color='Salmon')
+    ax.set(xlabel='Activities',title='Squirrels Activities')
+    plt.xticks(rotation=30)
+    for a,b in zip(x,v1):
+        plt.text(a, b+0.05, '%.0f' % b, ha='center', va= 'bottom',fontsize=10)
+    for a,b in zip(x,v2):
+        plt.text(a, b+0.05, '%.0f' % b, ha='center', va= 'bottom',fontsize=10)
+    ax.legend(['False','True'],loc='lower right',fontsize=15)
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
     plt.close(fig)
