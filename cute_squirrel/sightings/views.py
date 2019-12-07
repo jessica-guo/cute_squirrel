@@ -3,27 +3,24 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import squirrel
 from .forms import SqForm
-import pandas as pd
 
 def stats(request):
-    squirrels = squirrel.objects.all()
-    columns = [field.name for field in squirrel._meta.fields]
-    AM=pd.DataFrame(list(squirrels.values())).groupby('Shift').count()['Unique_Squirrel_ID'][0]
-    PM=pd.DataFrame(list(squirrels.values())).groupby('Shift').count()['Unique_Squirrel_ID'][1]
-    Adult=pd.DataFrame(list(squirrels.values())).groupby('Age').count()['Unique_Squirrel_ID'][0]
-    Juvenile=pd.DataFrame(list(squirrels.values())).groupby('Age').count()['Unique_Squirrel_ID'][1]
-    Grey=pd.DataFrame(list(squirrels.values())).groupby('Primary_Fur_Color').count()['Unique_Squirrel_ID'][0]
-    Cinnamon=pd.DataFrame(list(squirrels.values())).groupby('Primary_Fur_Color').count()['Unique_Squirrel_ID'][1]
-    Black=pd.DataFrame(list(squirrels.values())).groupby('Primary_Fur_Color').count()['Unique_Squirrel_ID'][2]
-    Ground_Plane=pd.DataFrame(list(squirrels.values())).groupby('Location').count()['Unique_Squirrel_ID'][0]
-    Above_Ground=pd.DataFrame(list(squirrels.values())).groupby('Location').count()['Unique_Squirrel_ID'][1]
+    AM=squirrel.objects.filter(Shift='AM').count()
+    PM=squirrel.objects.filter(Shift='PM').count()
+    Adult=squirrel.objects.filter(Age='Adult').count()
+    Juvenile=squirrel.objects.filter(Age='Juvenile').count()
+    Gray=squirrel.objects.filter(Primary_Fur_Color='Gray').count()
+    Cinnamon=squirrel.objects.filter(Primary_Fur_Color='Cinnamon').count()
+    Black=squirrel.objects.filter(Primary_Fur_Color='Black').count()
+    Ground_Plane=squirrel.objects.filter(Location='Ground Plane').count()
+    Above_Ground=squirrel.objects.filter(Location='Above Ground').count()
 
     context = {
             'AM':AM,
             'PM':PM,
             'Adult':Adult,
             'Juvenile':Juvenile,
-            'Grey':Grey,
+            'Gray':Gray,
             'Cinnamon':Cinnamon,
             'Black':Black,
             'Ground_Plane':Ground_Plane,
