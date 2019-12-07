@@ -165,4 +165,6 @@ def add_sightings(request):
 
     return render(request, 'sightings/update.html', context)
 
+def homepage(request):
+    return render(request, 'sightings/homepage.html')
 # Create your views here.
