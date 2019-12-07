@@ -13,6 +13,7 @@ import io
 import matplotlib.pyplot as plt; plt.rcdefaults()
 
 def stats(request):
+    # A view to count the number of each feature
     AM=squirrel.objects.filter(Shift='AM').count()
     PM=squirrel.objects.filter(Shift='PM').count()
     Adult=squirrel.objects.filter(Age='Adult').count()
