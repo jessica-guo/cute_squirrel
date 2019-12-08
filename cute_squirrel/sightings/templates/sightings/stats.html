@@ -1,94 +1,121 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-h1 {
-    text-align: center;
-}
+  <head>
+    <style>
+      h1 {
+        text-align: center;
+      }
 
-p {
-    text-align: center;
-}
+      p {
+        text-align: center;
+      }
 
-li {
-    text-align: center;
-}
+      li {
+        text-align: center;
+      }
 
-table, th, td {
-    border: 1px solid black;
-}
+      table, th, td {
+        border: None;
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
 
-table{
-    text-align: center;
-    background-color: rgb(221, 101, 118);
-    margin-left: auto;
-    margin-right: auto;
-}
-</style>
-</head>
-<body>
+      table {
+        text-align: center;
+        background-color: rgba(155, 106, 64, 0.3);
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 80%;
+      }
+      
+      tr:hover {background-color:rgba(155, 106, 64, 0.8);}
 
-<h1>Squirrels Stats</h1>
+      div {
+        text-align: center;
+      }
 
-<p>When the sightings happen</p>
+      body {
+        background-color: rgba(155, 106, 64, 0.3);
+      }
 
-<table>
-  <tr>
-    <th>AM</th>
-    <th>PM</th>
-  </tr>
-  <tr>
-    <td>{{ AM }}</td>
-    <td>{{ PM }}</td>
-  </tr>
-</table>
+      .button {
+        background-color: rgba(155, 106, 64, 0.8);
+	border: 1px solid;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin-top: 50px;
+	margin-bottom: 15px;
+	border-radius: 12px;
+      }
 
-<p>The Age of Squirrels</p>
+      .button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      }
+    </style>
+  </head>
 
-<table>
-  <tr>
-    <th>Adult</th>
-    <th>Juvenile</th>
-  </tr>
-  <tr>
-    <td>{{ Adult }}</td>
-    <td>{{ Juvenile }}</td>
-  </tr>
-</table>
+  <body>
+    <h1>Squirrels Stats</h1>
+    <p>When the sightings happen</p>
+    <table>
+      <tr>
+	<th>AM</th>
+	<th>PM</th>
+      </tr>
+      <tr>
+        <td>{{ AM }}</td>
+        <td>{{ PM }}</td>
+      </tr>
+    </table>
+    <p>The Age of Squirrels</p>
+    <table>
+      <tr>
+        <th>Adult</th>
+        <th>Juvenile</th>
+      </tr>
+      <tr>
+        <td>{{ Adult }}</td>
+        <td>{{ Juvenile }}</td>
+      </tr>
+    </table>
+    <p>Primary Fur Color of Squirrels</p>
+    <table>
+      <tr>
+        <th>Gray</th>
+        <th>Cinnamon</th>
+        <th>Black</th>
+      </tr>
+      <tr>
+        <td>{{ Gray }}</td>
+        <td>{{ Cinnamon }}</td>
+        <td>{{ Black }}</td>
+      </tr>
+    </table>
+    <p>The Location of Squirrels</p>
+    <table>
+      <tr>
+        <th>Ground_Plane</th>
+        <th>Above_Ground</th>
+      </tr>
+      <tr>
+        <td>{{ Ground_Plane }}</td>
+        <td>{{ Above_Ground }}</td>
+      </tr>
+    </table>
 
-<p>Primary Fur Color of Squirrels</p>
+    <div>
+      <a href="/sightings/stats/pie_graph" class="button">Visualize it!!!</a >
+      <a href="/sightings/stats/bar_graph " class="button">Learn more about squirrel activities</a >
+      <a href="/" class="button">Back to hompage</a>
+    </div>
 
-<table>
-  <tr>
-    <th>Gray</th>
-    <th>Cinnamon</th>
-    <th>Black</th>
-  </tr>
-  <tr>
-    <td>{{ Gray }}</td>
-    <td>{{ Cinnamon }}</td>
-    <td>{{ Black }}</td>
-  </tr>
-</table>
-
-<p>The Location of Squirrels</p>
-
-<table>
-  <tr>
-    <th>Ground_Plane</th>
-    <th>Above_Ground</th>
-  </tr>
-  <tr>
-    <td>{{ Ground_Plane }}</td>
-    <td>{{ Above_Ground }}</td>
-  </tr>
-</table>
-
-<li><a href='/sightings/stats/pie_graph'>Visualize it!!!</a></li>
-
-<li><a href='/sightings/stats/bar_graph'>Learn more about squirrel activities</a></li>
-
-</body>
+  </body>
 </html>
 
 
