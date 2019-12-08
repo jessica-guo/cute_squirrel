@@ -138,11 +138,11 @@ def update_sightings(request,Unique_Squirrel_ID):
         # check data is valid to post
         if form.is_valid():
             form.save()
-            return redirect('/sightings')
+            return redirect('/sightings/')
     else:
         form = SqForm(instance=sighting)
 
-    context = {
+    context = { 
         'form': form,
     }
 
@@ -155,7 +155,7 @@ def add_sightings(request):
         # check data is calid to add
         if form.is_valid():
             form.save()
-            return redirect('/sightings')
+            return redirect('/sightings/')
     else:
          form = SqForm()
 

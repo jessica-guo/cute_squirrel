@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      body {
+          background-color: rgba(155, 106, 64, 0.3);
+      }
+
+      h1 {
+          text-align: center;
+      }
+      
+      h2 {
+          font-size: 17px;
+          font-style: italic;
+      }
+
+    </style>
+  </head>
   <body>
+    <h1>All information about squirrels</h1>
+    <h2>Hint: Longitude, Latitude, Unique Squirrel ID can't be blank</h2>
     <form method = 'POST' >
         {% csrf_token %}
-
-        {{ form.as_p }}
+        
+	{{ form.as_p }}
         <br>
         <input type='submit' name='Submit'>
     </form>
+      
+    </p>
+    
+
   </body>
 </html>

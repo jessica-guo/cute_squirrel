@@ -1,6 +1,79 @@
-<li><a href='/sightings/add'>Add</a></li>
-<ul>
-  {% for squirrel in squirrels %}
-  <li><a href='/sightings/{{ squirrel.Unique_Squirrel_ID }}'>{{ squirrel.Unique_Squirrel_ID }}</a></li>
-  {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+          background-color: rgba(155, 106, 64, 0.3);
+      }
+
+      h1 {
+          text-align: center;
+      }
+
+      p {
+          margin-top: 15px;
+          margin-bottom: 15px;
+          margin-left: 15px;
+          margin-right: 15px;
+          font-size: 17px;
+      }
+
+      .button {
+        background-color: rgb(150, 108, 82);
+        border: 1px solid;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+      }
+
+      .button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      }
+
+      table {
+        text-align: center;
+        background-color: rgba(155, 106, 64, 0.3);
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 60%;
+      }
+
+      table, th, td {
+        border: None;
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {background-color:rgba(155, 106, 64, 0.8);}
+    </style>
+  </head>
+  <body>
+
+    <h1>View all squirrel data</h1>
+
+    <a href="/" class="button">Back to homepage</a>
+
+    <li style="font-size:15pt">Add squirrel data
+      <a href="/sightings/add" class="button">Add</a>
+    </li>
+
+    <li style="font-size:15pt">View or update squirrel data</li><br>
+    
+    <table>
+      {% for squirrel in squirrels %}
+      <tr>
+        <td><a href='/sightings/{{ squirrel.Unique_Squirrel_ID }}'>{{ squirrel.Unique_Squirrel_ID }}</a></td>
+      </tr>      
+      {% endfor %}
+    </table>
+
+  </body>
+</html>
