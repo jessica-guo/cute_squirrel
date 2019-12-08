@@ -31,11 +31,13 @@ class squirrel(models.Model):
         max_length=2,
         choices=SHIFT_CHOICES,
         default=OTHERS,
+        blank=True,
     )
 
     Date = models.CharField(
         help_text=_('The date of sighting session'),
         max_length=10,
+        blank=True,
     )
 
     ADULT = 'Adult'
@@ -53,6 +55,7 @@ class squirrel(models.Model):
         max_length=10,
         choices=AGE_CHOICES,
         default=OTHERS,
+        blank=True,
     )
 
     GRAY = 'Gray'
@@ -72,6 +75,7 @@ class squirrel(models.Model):
         max_length=10,
         choices=COLOR_CHOICES,
         default=OTHERS,
+        blank=True,
     )
 
     GROUND_PLANE = 'ground plane'
@@ -89,11 +93,14 @@ class squirrel(models.Model):
         max_length=50,
         choices=LOCATION_CHOICES,
         default=OTHERS,
+        blank=True,
     )
 
     Specific_Location = models.CharField(
         help_text=_('Specific Location of squirrels'),
         max_length=100,
+        default='',
+        blank=True,
     )
 
     Running = models.BooleanField(
@@ -119,6 +126,8 @@ class squirrel(models.Model):
     Other_Activities = models.CharField(
         help_text=_('Other activities squirrels are doing'),
         max_length=100,
+        default='',
+        blank=True,
     )
 
     Kuks = models.BooleanField(
