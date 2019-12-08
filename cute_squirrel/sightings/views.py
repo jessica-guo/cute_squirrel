@@ -142,7 +142,7 @@ def update_sightings(request,Unique_Squirrel_ID):
     else:
         form = SqForm(instance=sighting)
 
-    context = {
+    context = { 
         'form': form,
     }
 
