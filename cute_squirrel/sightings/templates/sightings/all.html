@@ -5,11 +5,9 @@
       body {
           background-color: rgba(155, 106, 64, 0.3);
       }
-
       h1 {
           text-align: center;
       }
-
       p {
           margin-top: 15px;
           margin-bottom: 15px;
@@ -17,25 +15,57 @@
           margin-right: 15px;
           font-size: 17px;
       }
-
       .button {
-        background-color: rgb(150, 108, 82);
-        border: 1px solid;
-        color: white;
-        padding: 10px 20px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
         margin-top: 20px;
         margin-bottom: 15px;
-        border-radius: 12px;
+        margin-left: 15px;
       }
-
-      .button:hover {
+      
+      .button1 {
+        border: 1px solid;
+        background-color: rgb(150, 108, 82);
+        border-radius: 12px;
+        padding: 10px 20px;
+        color: white;
+      }
+      .button3 {
+        background-color: rgba(155, 106, 64, 0);
+        border-radius: 12px;
+        padding: 6px;
+        color: black;
+      }
+      .button1:hover {
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
       }
+      .button3 span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+      }
 
+      .button3 span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+      }
+
+      .button3:hover span {
+        padding-right: 25px;
+      }
+
+      .button3:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
+      
       table {
         text-align: center;
         background-color: rgba(155, 106, 64, 0.3);
@@ -47,33 +77,39 @@
 
       table, th, td {
         border: None;
-        padding: 8px;
         text-align: center;
         border-bottom: 1px solid #ddd;
       }
 
-      tr:hover {background-color:rgba(155, 106, 64, 0.8);}
+      th {
+	padding: 15px;
+        background-color: rgba(155, 106, 64, 0.8);
+      }
+ 
+      tr:hover {background-color: rgba(155, 106, 64, 0.8);}
     </style>
   </head>
   <body>
-
     <h1>View all squirrel data</h1>
-
-    <a href="/" class="button">Back to homepage</a>
-
+    <a href="/" class="button button1">Back to homepage</a>
     <li style="font-size:15pt">Add squirrel data
-      <a href="/sightings/add" class="button">Add</a>
+      <a href="/sightings/add" class="button button1">Add</a>
     </li>
-
     <li style="font-size:15pt">View or update squirrel data</li><br>
-    
     <table>
+    
+      <tr>
+	<th>Unique_Squirrel_ID</th>
+        <th>Link</th>
+      </tr>
+      
       {% for squirrel in squirrels %}
       <tr>
-        <td><a href='/sightings/{{ squirrel.Unique_Squirrel_ID }}'>{{ squirrel.Unique_Squirrel_ID }}</a></td>
-      </tr>      
+	<td>{{ squirrel.Unique_Squirrel_ID }}</td>
+        <td><a href="/sightings/{{ squirrel.Unique_Squirrel_ID }}" class="button button3"><span>Click me</span></a></td>
+      </tr>
       {% endfor %}
+      
     </table>
-
   </body>
 </html>
