@@ -21,3 +21,4 @@ Pinjie Guo, Chenqi Fan
 
 ## Link to the server
 
+[link to cute_squirrel](https://graceful-goods-253201.appspot.com)
